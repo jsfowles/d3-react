@@ -1784,7 +1784,7 @@ d3-drag@1, d3-drag@1.1.1:
     d3-dispatch "1"
     d3-selection "1"
 
-d3-dsv@1, d3-dsv@1.0.7:
+d3-dsv@1, d3-dsv@1.0.7, d3-dsv@^1.0.7:
   version "1.0.7"
   resolved "https://registry.yarnpkg.com/d3-dsv/-/d3-dsv-1.0.7.tgz#137076663f398428fc3d031ae65370522492b78f"
   dependencies:
@@ -1845,7 +1845,7 @@ d3-random@1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/d3-random/-/d3-random-1.1.0.tgz#6642e506c6fa3a648595d2b2469788a8d12529d3"
 
-d3-request@1.0.6:
+d3-request@1.0.6, d3-request@^1.0.6:
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/d3-request/-/d3-request-1.0.6.tgz#a1044a9ef4ec28c824171c9379fae6d79474b19f"
   dependencies:

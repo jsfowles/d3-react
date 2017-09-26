@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Arc from './Arc';
-import * as d3 from "d3";
+
 
 
 class App extends Component {
@@ -10,18 +10,11 @@ class App extends Component {
     this.togglePercent = this.togglePercent.bind(this);
   }
 
+
   togglePercent() {
     const percentage = this.state.percentComplete === 0.2 ? 0.8 : 0.2;
     this.setState({ percentComplete: percentage });
   }
-
-  componentWillMount() {
-    d3.csv("file.csv", function(error, data) {
-      if (error) throw error;
-      console.log(data.columns); 
-    });
-  }
-
 
   render() {
     console.log(this.state.percentComplete);

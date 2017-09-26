@@ -1,12 +1,22 @@
 import React, { Component } from "react";
 import * as d3 from "d3";
+import genderData from './data/gender.csv';
 
 class Arc extends Component {
+  constructor(props) {
+   super(props);
+   this.state = {};
+ }
+
   componentDidMount() {
     this.drawArc();
   }
 
   componentWillMount() {
+    d3.csvParseRow(genderData, function(error, data) {
+      if (error) throw error;
+      console.log(data);
+    });
   }
 
   componentDidUpdate() {
