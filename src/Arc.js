@@ -12,14 +12,8 @@ class Arc extends Component {
     this.drawArc();
   }
 
-  promisify(func) {
-     return () =>
-       new Promise((resolve, reject) => { })
-   }
-
   componentDidUpdate() {
     this.redrawArc();
-    console.log(this.state);
   }
 
   drawArc() {
@@ -98,9 +92,10 @@ class Arc extends Component {
   }
 
   setForeground(context) {
+    console.log(this.props.percentComplete)
     return context
       .append("path")
-      .datum({ endAngle: .10})
+      .datum({ endAngle: this.props.percentComplete * this.tau})
       .style("fill", this.props.foregroundColor)
       .attr("d", this.arc());
   }

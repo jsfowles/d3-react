@@ -10,36 +10,59 @@ const ethnicityData = 'https://assets.contentful.com/i5wc420v2vd1/6b4ZyR3KTu688U
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = { percentComplete: 0.10};
-    console.log(this.state.genderData)
-    this.togglePercent = this.togglePercent.bind(this);
-  }
-
-  componentDidUpdate() {
-    const toggleData = numeral(this.state.genderData[0].Female).value();
-    console.log(toggleData);
+    this.state = { percentComplete: .41};
+    this.toggleCompany = this.toggleCompany.bind(this);
+    this.toggleLeadership = this.toggleLeadership.bind(this);
+    this.toggleTech = this.toggleTech.bind(this);
+    this.toggleCreative = this.toggleCreative.bind(this);
   }
 
   componentDidMount() {
     this.getData();
   }
 
+  componentDidUpdate(prevProps, prevState){
+    const { percentComplete } = this.state;
+      if(percentComplete !== prevState.percentComplete){
+        console.log('updated')
+      }
+    console.log(prevState.percentComplete)
+}
+
   getData() {
      d3.csv(genderData, (data) => this.setState(() => ({ genderData: data })));
      d3.csv(ethnicityData, (data) => this.setState(() => ({ ethnicityData: data })));
    }
 
-  togglePercent() {
-    const percentage = numeral(this.state.genderData[0].Female).value();
-    this.setState({ percentComplete: percentage });
+  toggleCompany() {
+    const company = numeral(this.state.genderData[0].Female).value();
+    this.setState({ percentComplete: company });
   }
 
-  render() {
+  toggleLeadership() {
+    const leadership = numeral(this.state.genderData[1].Female).value();
+    this.setState({ percentComplete: leadership });
+  }
+
+  toggleTech() {
+    const tech = numeral(this.state.genderData[2].Female).value();
+    this.setState({ percentComplete: tech });
+  }
+
+  toggleCreative() {
+    const creative = numeral(this.state.genderData[3].Female).value();
+    this.setState({ percentComplete: creative });
+  }
+
+  render(props) {
     return (
       <div>
-        <button onClick={this.togglePercent}>Toggle</button>
+        <button onClick={this.toggleCompany}>Company</button>
+        <button onClick={this.toggleLeadership}>Leadership</button>
+        <button onClick={this.toggleTech}>Tech</button>
+        <button onClick={this.toggleCreative}>Creative</button>
         <Arc
-          dataText={this.state.percentComplete}
+
           text="Gender"
           height={300}
           width={300}
@@ -49,7 +72,7 @@ class App extends Component {
           backgroundColor="#e6e6e6"
           foregroundColor="#E80000"
           percentComplete={this.state.percentComplete}
-          duration={1000}
+          duration={2000}
           data
         />
       </div>
