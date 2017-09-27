@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import * as d3 from "d3";
-import genderData from './data/gender.csv';
+
 
 class Arc extends Component {
   constructor(props) {
@@ -12,15 +12,14 @@ class Arc extends Component {
     this.drawArc();
   }
 
-  componentWillMount() {
-    d3.csvParseRow(genderData, function(error, data) {
-      if (error) throw error;
-      console.log(data);
-    });
-  }
+  promisify(func) {
+     return () =>
+       new Promise((resolve, reject) => { })
+   }
 
   componentDidUpdate() {
     this.redrawArc();
+    console.log(this.state);
   }
 
   drawArc() {
@@ -29,6 +28,7 @@ class Arc extends Component {
     this.setForeground(context);
     this.updatePercent(context);
     this.setText(context);
+    this.dataText(context);
   }
 
   updatePercent(context) {
@@ -68,11 +68,21 @@ class Arc extends Component {
   }
 
   setText(context) {
-    console.log(this.refs.arc);
     return context
       .append("text")
         .text(this.props.text)
         .attr("x", -40)
+        .attr("y", 10)
+          .style("font-family", "Gotham")
+          .style("font-size", 18)
+          .style("text-transform", "uppercase");
+  }
+
+  dataText(context) {
+    return context
+      .append("text")
+        .text(this.props.dataText)
+        .attr("x", -100)
         .attr("y", 10)
           .style("font-family", "Gotham")
           .style("font-size", 18)
@@ -90,7 +100,7 @@ class Arc extends Component {
   setForeground(context) {
     return context
       .append("path")
-      .datum({ endAngle: 2 })
+      .datum({ endAngle: .10})
       .style("fill", this.props.foregroundColor)
       .attr("d", this.arc());
   }
