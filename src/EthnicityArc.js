@@ -1,16 +1,30 @@
 import React, { Component } from "react";
 import * as d3 from "d3";
 
-
-class Arc extends Component {
+class EthnicityArc extends Component {
   constructor(props) {
    super(props);
    this.state = {};
  }
 
+ convertData = (context) => {
+   Object.keys(this.props.data).reduce((a, b) => {
+     if (b !== "title") {
+       this.setForeground(context, {
+         label: b,
+         value: this.props.data[b],
+         startValue: a,
+       });
+     }
+
+     return b !== "title" ? a + this.props.data[b] : 0;
+   }, 0);
+ }
+
   componentDidMount() {
     this.drawArc();
   }
+
 
   componentDidUpdate() {
     this.redrawArc();
@@ -19,8 +33,10 @@ class Arc extends Component {
   drawArc() {
     const context = this.setContext();
     this.setBackground(context);
-    this.setForeground(context);
-    this.updatePercent(context);
+
+    this.convertData(context);
+    // this.setForeground(context);
+
     this.setText(context);
     this.dataText(context);
   }
@@ -29,7 +45,7 @@ class Arc extends Component {
     return this.setForeground(context)
       .transition()
       .duration(this.props.duration)
-      .call(this.arcTween, this.tau * this.props.percentComplete, this.arc());
+      .call(this.arcTween, this.tau * this.props.ethnicityUpdate, this.arc());
   }
 
   arcTween(transition, newAngle, arc) {
@@ -44,7 +60,7 @@ class Arc extends Component {
   }
 
   redrawArc() {
-    const context = d3.select("#d3-arc");
+    const context = d3.select("#ethnicity-arc");
     context.remove();
     this.drawArc();
   }
@@ -91,23 +107,23 @@ class Arc extends Component {
       .attr("d", this.arc());
   }
 
-  setForeground(context) {
-    console.log(this.props.percentComplete)
+  setForeground(context, data) {
+    console.log(data.value)
     return context
       .append("path")
-      .datum({ endAngle: this.props.percentComplete * this.tau})
-      .style("fill", this.props.foregroundColor)
-      .attr("d", this.arc());
+      .datum({ endAngle: data.value * this.tau})
+      .style("fill", 'pink')
+      .attr("d", this.arc(data.value.toFixed(2)));
   }
 
   tau = Math.PI * 2;
 
-  arc() {
+  arc(value) {
     return d3
       .arc()
       .innerRadius(this.props.innerRadius)
       .outerRadius(this.props.outerRadius)
-      .startAngle(0);
+      .startAngle(value)
   }
 
   render() {
@@ -115,4 +131,4 @@ class Arc extends Component {
   }
 }
 
-export default Arc;
+export default EthnicityArc;
