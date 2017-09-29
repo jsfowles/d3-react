@@ -8,23 +8,24 @@ class EthnicityArc extends Component {
  }
 
  convertData = (context) => {
-   Object.keys(this.props.data).reduce((a, b) => {
+   Object.keys(this.props.data, this.props.color).reduce((a, b) => {
      if (b !== "title") {
        this.setForeground(context, {
          label: b,
-         value: this.props.data[b],
+         value: parseInt(this.props.data[b]),
          startValue: a,
+         color: this.props.color[b],
        });
      }
 
-     return b !== "title" ? a + this.props.data[b] : 0;
+     return b !== "Title" ? a + parseInt(this.props.data[b]) : 0;
    }, 0);
  }
+
 
   componentDidMount() {
     this.drawArc();
   }
-
 
   componentDidUpdate() {
     this.redrawArc();
@@ -107,16 +108,17 @@ class EthnicityArc extends Component {
       .attr("d", this.arc());
   }
 
-  setForeground(context, data) {
-    console.log(data.value)
+  setForeground(context, data, color) {
+    const value = parseFloat((data.value) / 100).toFixed(2);
+    const startValue = parseFloat((data.startValue) / 100).toFixed(2);
     return context
       .append("path")
-      .datum({ endAngle: data.value * this.tau})
-      .style("fill", 'pink')
-      .attr("d", this.arc(data.value.toFixed(2)));
+      .datum({ endAngle: startValue * this.tau})
+      .style("fill", data.color)
+      .attr("d", this.arc(value));
   }
 
-  tau = Math.PI * 2;
+  tau = - Math.PI * 2;
 
   arc(value) {
     return d3

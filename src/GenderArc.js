@@ -22,7 +22,6 @@ class GenderArc extends Component {
     this.setForeground(context);
     this.updatePercent(context);
     this.setText(context);
-    this.dataText(context);
   }
 
   updatePercent(context) {
@@ -66,17 +65,6 @@ class GenderArc extends Component {
       .append("text")
         .text(this.props.text)
         .attr("x", -40)
-        .attr("y", 10)
-          .style("font-family", "Gotham")
-          .style("font-size", 18)
-          .style("text-transform", "uppercase");
-  }
-
-  dataText(context) {
-    return context
-      .append("text")
-        .text(this.props.dataText)
-        .attr("x", -100)
         .attr("y", 10)
           .style("font-family", "Gotham")
           .style("font-size", 18)
